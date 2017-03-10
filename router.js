@@ -1,5 +1,6 @@
 const AuthenticationController = require('./controllers/authentication');
 const UserController = require('./controllers/user');
+const PostController = require('./controllers/post');
 const ChatController = require('./controllers/chat');
 const CommunicationController = require('./controllers/communication');
 const StripeController = require('./controllers/stripe');
@@ -21,6 +22,7 @@ module.exports = function (app) {
   const apiRoutes = express.Router(),
     authRoutes = express.Router(),
     userRoutes = express.Router(),
+    postRoutes = express.Router(),
     chatRoutes = express.Router(),
     payRoutes = express.Router(),
     communicationRoutes = express.Router();
@@ -62,6 +64,25 @@ module.exports = function (app) {
   apiRoutes.get('/admins-only', requireAuth, AuthenticationController.roleAuthorization(ROLE_ADMIN), (req, res) => {
     res.send({ content: 'Admin dashboard is working.' });
   });
+
+  //= ========================
+  // Post Routes
+  //= ========================
+
+  // Set post routes as a subgroup/middleware to apiRoutes
+  apiRoutes.use('/posts', postRoutes);
+
+  // Retrieve all posts
+  postRoutes.get('/', PostController.getPosts);
+
+  // Retrieve single post
+  postRoutes.get('/:postId', PostController.getPost);
+
+  // Create a post
+  postRoutes.post('/', PostController.addPost);
+
+  // Delete a post
+  postRoutes.delete('/:postId', requireAuth, PostController.deletePost);
 
   //= ========================
   // Chat Routes
@@ -114,5 +135,5 @@ module.exports = function (app) {
   communicationRoutes.post('/contact', CommunicationController.sendContactForm);
 
   // Set url for API group routes
-  app.use('/api', apiRoutes);
+  app.use('/', apiRoutes);
 };
