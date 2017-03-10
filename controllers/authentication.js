@@ -11,19 +11,19 @@ const config = require('../config/main');
 // TO-DO Add issuer and audience
 function generateToken(user) {
   return jwt.sign(user, config.secret, {
-    expiresIn: 604800 // in seconds
+    expiresIn: 604800, // in seconds
   });
 }
 
 //= =======================================
 // Login Route
 //= =======================================
-exports.login = function (req, res, next) {
+exports.login = function (req, res) {
   const userInfo = setUserInfo(req.user);
 
   res.status(200).json({
     token: `JWT ${generateToken(userInfo)}`,
-    user: userInfo
+    user: userInfo,
   });
 };
 
@@ -68,15 +68,15 @@ exports.register = function (req, res, next) {
       profile: { firstName, lastName }
     });
 
-    user.save((err, user) => {
-      if (err) { return next(err); }
+    user.save((saveErr, savedUser) => {
+      if (saveErr) { return next(err); }
 
         // Subscribe member to Mailchimp list
-        // mailchimp.subscribeToNewsletter(user.email);
+        // mailchimp.subscribeToNewsletter(savedUser.email);
 
         // Respond with JWT if user was created
 
-      const userInfo = setUserInfo(user);
+      const userInfo = setUserInfo(savedUser);
 
       res.status(201).json({
         token: `JWT ${generateToken(userInfo)}`,
