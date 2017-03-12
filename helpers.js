@@ -4,13 +4,13 @@ const ROLE_OWNER = require('./constants').ROLE_OWNER;
 const ROLE_ADMIN = require('./constants').ROLE_ADMIN;
 
 // Set user info from request
-exports.setUserInfo = function setUserInfo(request) {
+exports.setUserInfo = function setUserInfo(user) {
   const getUserInfo = {
-    _id: request._id,
-    firstName: request.profile.firstName,
-    lastName: request.profile.lastName,
-    email: request.email,
-    role: request.role
+    sid: user.sid,
+    firstName: user.profile.firstName,
+    lastName: user.profile.lastName,
+    email: user.email,
+    role: user.role
   };
 
   return getUserInfo;

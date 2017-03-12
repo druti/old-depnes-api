@@ -1,6 +1,7 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
+const shortid = require('shortid');
 const ROLE_MEMBER = require('../constants').ROLE_MEMBER;
 const ROLE_CLIENT = require('../constants').ROLE_CLIENT;
 const ROLE_OWNER = require('../constants').ROLE_OWNER;
@@ -39,7 +40,11 @@ const UserSchema = new Schema({
     activeUntil: { type: Date }
   },
   resetPasswordToken: { type: String },
-  resetPasswordExpires: { type: Date }
+  resetPasswordExpires: { type: Date },
+  sid: {
+    type: 'String',
+    default: shortid.generate
+  },
 },
   {
     timestamps: true

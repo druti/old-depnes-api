@@ -23,7 +23,7 @@ exports.getPosts = function (req, res) {
  * @returns void
  */
 exports.getPost = function (req, res) {
-  Post.findOne({ _id: req.params._id }).exec((err, post) => {
+  Post.findOne({ sid: req.params.sid }).exec((err, post) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -63,7 +63,7 @@ exports.addPost = function (req, res) {
  * @returns void
  */
 exports.deletePost = function (req, res) {
-  Post.findOne({ _id: req.params._id }).exec((err, post) => {
+  Post.findOne({ sid: req.params.sid }).exec((err, post) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -79,7 +79,6 @@ function parseIn(post) {
   const lastOp = ops[ops.length-1];
 
   if (!ops[0].insert || !lastOp.insert) {
-    console.log('PostId: ', post.id); // eslint-disable-line
     console.log('Operations: \n', ops); // eslint-disable-line
     return new Error('!!!!!!!!!!! Unexpected post content operation');
   }

@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const shortid = require('shortid');
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
@@ -12,10 +13,12 @@ const postSchema = new Schema({
     type: 'String',
     required: true
   },
+  sid: {
+    type: 'String',
+    default: shortid.generate
+  },
 }, {
   timestamps: true
 });
 
-const postModel = mongoose.model('post', postSchema);
-
-module.exports = postModel;
+module.exports = mongoose.model('post', postSchema);
