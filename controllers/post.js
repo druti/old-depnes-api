@@ -25,10 +25,10 @@ exports.getPosts = function (req, res) {
 exports.getPost = function (req, res) {
   Post.findOne({ sid: req.params.postId }).exec((err, post) => {
     if (err) {
-      res.status(500).send(err);
+      return res.status(500).end(err);
     }
     if (!post) {
-      res.status(200).send({ message: 'Post not found' });
+      return res.status(404).json({ reason: 'Post not found' });
     }
 
     res.json({ post });

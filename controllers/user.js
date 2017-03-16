@@ -9,8 +9,11 @@ exports.viewProfile = function (req, res, next) {
 
   User.findOne({ sid: userId }, (err, user) => {
     if (err) {
-      res.status(400).json({ error: 'No user could be found for this ID.' });
+      res.status(500).json(err);
       return next(err);
+    }
+    if (!user) {
+      return res.status(404).json({ reason: 'User not found' });
     }
 
     const userToReturn = setUserInfo(user);

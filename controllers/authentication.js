@@ -40,17 +40,17 @@ exports.register = function (req, res, next) {
 
   // Return error if no email provided
   if (!email) {
-    return res.status(422).send({ message: 'You must enter an email address.' });
+    return res.status(422).send({ reason: 'You must enter an email address.' });
   }
 
   // Return error if full name not provided
   if (!firstName || !lastName) {
-    return res.status(422).send({ message: 'You must enter your full name.' });
+    return res.status(422).send({ reason: 'You must enter your full name.' });
   }
 
   // Return error if no password provided
   if (!password) {
-    return res.status(422).send({ message: 'You must enter a password.' });
+    return res.status(422).send({ reason: 'You must enter a password.' });
   }
 
   User.findOne({ email }, (err, existingUser) => {
@@ -58,7 +58,7 @@ exports.register = function (req, res, next) {
 
       // If user is not unique, return error
     if (existingUser) {
-      return res.status(422).send({ message: 'That email address is already in use.' });
+      return res.status(422).send({ reason: 'That email address is already in use.' });
     }
 
       // If email is unique and password was provided, create account
