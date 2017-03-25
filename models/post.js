@@ -13,6 +13,10 @@ const postSchema = new Schema({
     type: 'String',
     required: true
   },
+  groupId: {
+    type: 'String',
+    default: shortid.generate
+  },
   sid: {
     type: 'String',
     default: shortid.generate
