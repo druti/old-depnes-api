@@ -51,6 +51,10 @@ exports.register = function (req, res, next) {
   // Return error if no password provided
   if (!password) {
     return res.status(422).send({ reason: 'You must enter a password.' });
+  } else if (password.length < 6) {
+    return res.status(422).send({
+      reason: 'Your password must be atleast 6 characters long.'
+    });
   }
 
   User.findOne({ email }, (err, existingUser) => {

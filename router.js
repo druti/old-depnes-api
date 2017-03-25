@@ -15,7 +15,19 @@ const passportService = require('./config/passport');
 
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });
-const requireLogin = passport.authenticate('local', { session: false });
+const requireLogin = function (req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) {
+      return res.status(401).send({
+        reason: `The username and password you entered did not match our records.
+          Please double-check and try again.`
+      });
+    }
+    req.login(user, { session: false });
+    return next();
+  })(req, res, next);
+}
 
 module.exports = function (app) {
   // Initializing route groups

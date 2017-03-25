@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 const socketEvents = require('./socketEvents');
 const config = require('./config/main');
 
+mongoose.Promise = global.Promise;
+
 // Database Setup
 mongoose.connect(config.database);
 
