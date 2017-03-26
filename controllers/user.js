@@ -9,15 +9,15 @@ exports.viewProfile = function (req, res, next) {
 
   User.findOne({ sid: userId }, (err, user) => {
     if (err) {
-      res.status(500).json(err);
+      res.status(500).send(err);
       return next(err);
     }
     if (!user) {
-      return res.status(404).json({ reason: 'User not found' });
+      return res.status(404).send({ reason: 'User not found' });
     }
 
     const userToReturn = setUserInfo(user);
 
-    return res.status(200).json({ user: userToReturn });
+    return res.status(200).send({ user: userToReturn });
   });
 };

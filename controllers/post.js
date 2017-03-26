@@ -7,7 +7,7 @@ const Post = require('../models/post');
  * @returns void
  */
 exports.getPosts = function (req, res) {
-  Post.find().sort('-dateAdded').exec((err, posts) => {
+  Post.find().sort('-createdAt').exec((err, posts) => {
     if (err) {
       res.status(500).send(err);
     }
