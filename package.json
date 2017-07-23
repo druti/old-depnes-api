@@ -1,19 +1,12 @@
 {
-  "name": "mern-starter-server",
-  "version": "1.0.0",
-  "description": "API server for MERN Starter, powered by Express.",
+  "name": "",
+  "version": "0.1.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "mocha -S --ui bdd --require ./tests/spec_helper.js --recursive ./tests --reporter spec",
     "dev": "nodemon index.js"
   },
-  "keywords": [
-    "mern",
-    "api",
-    "server-side"
-  ],
-  "author": "Joshua Slate",
-  "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
